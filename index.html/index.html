@@ -1225,7 +1225,7 @@ document.getElementById("bookingForm").addEventListener("submit", async function
     diaSemana === 0 || horaNumero > 14;
 
   /* GUARDAR EN SUPABASE */
-
+  console.log("ESTOY EJECUTANDO EL CÓDIGO NUEVO");
   const { error } = await supabaseClient
     .from("citas")
     .insert([

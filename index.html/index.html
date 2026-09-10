@@ -1269,15 +1269,15 @@ fechaInput.addEventListener("change", async function(){
   }
 
 
-  /* CONSULTAR CITAS YA AGENDADAS */
+ /* CONSULTAR HORAS YA AGENDADAS */
 
-  const { data: citasOcupadas, error } =
-    await supabaseClient
-      .from("citas")
-      .select("hora, estado")
-      .eq("fecha", fechaSeleccionada)
-      .eq("estado", "Agendada");
-
+const { data: citasOcupadas, error } =
+  await supabaseClient.rpc(
+    "obtener_horas_agendadas",
+    {
+      p_fecha: fechaSeleccionada
+    }
+  );
 
   if(error){
 

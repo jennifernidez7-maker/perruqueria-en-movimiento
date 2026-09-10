@@ -502,9 +502,7 @@ footer a{
 <div class="navbar">
 
 <a href="#inicio">
-<img src="imagenes/logo.jpeg"
-     alt="Logo de Perruqueria en movimiento"
-     class="footer-logo">
+<img src="imagenes/logo.jpg" alt="Logo de Perruqueria en movimiento" class="logo">
 </a>
 
 <nav>
@@ -563,8 +561,7 @@ Atendemos con cita previa. 🐾
 
 <div class="hero-image">
 
-<img src="imagenes/foto6.jpg"
-     alt="Max de Perruqueria en movimiento">
+<img src="imagenes/foto6.jpeg" alt="Max de Perruqueria en movimiento">
 
 </div>
 
@@ -869,14 +866,11 @@ adaptándonos al temperamento de cada lomito o michi.
 
 <div class="gallery">
 
-<img src="/perruqueria-en-movimiento/imagenes/foto3.jpg"
-     alt="Trabajo de Perruqueria en movimiento">
+<img src="imagenes/foto3.jpg" alt="Trabajo de Perruqueria en movimiento">
 
-<img src="https://jennifernidez7-maker.github.io/perruqueria-en-movimiento/imagenes/foto4.jpg"
-     alt="Mascota atendida en Perruqueria en movimiento">
+<img src="imagenes/foto4.jpg" alt="Mascota atendida en Perruqueria en movimiento">
 
-<img src="https://jennifernidez7-maker.github.io/perruqueria-en-movimiento/imagenes/foto5.jpg"
-     alt="Grooming de Perruqueria en movimiento">
+<img src="imagenes/foto5.jpg" alt="Grooming de Perruqueria en movimiento">
 
 </div>
 
@@ -1102,7 +1096,7 @@ para agendar la cita. Los domingos también requieren anticipo.
 
 <footer>
 
-<img src="/perruqueria-en-movimiento/imagenes/logo.jpeg"
+<img src="imagenes/logo.jpg"
      alt="Logo de Perruqueria en movimiento"
      class="footer-logo">
 
@@ -1125,9 +1119,16 @@ Nogales, Sonora
 
 </footer>
 
-
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
+const SUPABASE_URL = "https://rpeswsaygvoagpyrwkrm.supabase.co";
 
+const SUPABASE_KEY = "sb_publishable_6l0298Y2sqZmql5KWkUw-Q_rFWqNj41";
+
+const supabaseClient = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
 /* FECHA MÍNIMA */
 
 const fechaInput = document.getElementById("fecha");
@@ -1195,10 +1196,13 @@ fechaInput.addEventListener("change", function(){
 
 /* FORMULARIO */
 
-document.getElementById("bookingForm").addEventListener("submit", function(e){
+document.getElementById("bookingForm").addEventListener("submit", async function(e){
 
   e.preventDefault();
 
+  const boton = this.querySelector("button[type='submit']");
+  boton.disabled = true;
+  boton.textContent = "⏳ Guardando cita...";
 
   const fecha = document.getElementById("fecha").value;
   const hora = document.getElementById("hora").value;
@@ -1211,19 +1215,52 @@ document.getElementById("bookingForm").addEventListener("submit", function(e){
   const peso = document.getElementById("peso").value;
   const notas = document.getElementById("notas").value;
 
-
   const fechaObj = new Date(fecha + "T12:00:00");
-
   const diaSemana = fechaObj.getDay();
-
   const horaNumero = parseInt(hora.split(":")[0]);
-
 
   /* ANTICIPO */
 
   const requiereAnticipo =
     diaSemana === 0 || horaNumero > 14;
 
+  /* GUARDAR EN SUPABASE */
+
+  const { error } = await supabaseClient
+    .from("citas")
+    .insert([
+      {
+        fecha: fecha,
+        hora: hora,
+        servicio: servicio,
+      tipo_mascota: tipo,
+        nombre_mascota: nombreMascota,
+        nombre_dueno: nombreDueno,
+        telefono: telefono,
+        raza: raza || null,
+        peso: peso || null,
+        notas: notas || null,
+        estado: "Pendiente",
+        requiere_anticipo: requiereAnticipo
+      }
+    ]);
+
+  if(error){
+
+    console.error("Error al guardar la cita:", error);
+
+    alert(
+      "❌ No pudimos guardar la cita. " +
+      "Por favor inténtalo nuevamente."
+    );
+
+    boton.disabled = false;
+    boton.textContent = "💬 Solicitar cita por WhatsApp";
+
+    return;
+  }
+
+  /* FECHA BONITA */
 
   const fechaBonita =
     fechaObj.toLocaleDateString("es-MX", {
@@ -1233,6 +1270,7 @@ document.getElementById("bookingForm").addEventListener("submit", function(e){
       day:"numeric"
     });
 
+  /* MENSAJE DE WHATSAPP */
 
   let mensaje = "";
 
@@ -1266,20 +1304,19 @@ document.getElementById("bookingForm").addEventListener("submit", function(e){
 
   mensaje += "%0A";
 
-
   if(requiereAnticipo){
 
-    mensaje += "💰 *IMPORTANTE:* Esta cita requiere anticipo para poder agendarse.%0A%0A";
+    mensaje +=
+      "💰 *IMPORTANTE:* Esta cita requiere anticipo para poder agendarse.%0A%0A";
 
   }
-
 
   mensaje +=
     "⏳ *La cita queda pendiente de confirmación por Perruqueria en movimiento.*";
 
+  /* ABRIR WHATSAPP */
 
   const numeroWhatsApp = "526311864750";
-
 
   const url =
     "https://wa.me/" +
@@ -1287,11 +1324,19 @@ document.getElementById("bookingForm").addEventListener("submit", function(e){
     "?text=" +
     mensaje;
 
-
   window.open(url, "_blank");
 
-});
+  /* LIMPIAR FORMULARIO */
 
+  this.reset();
+
+  horaSelect.innerHTML =
+    '<option value="">Selecciona una fecha primero</option>';
+
+  boton.disabled = false;
+  boton.textContent = "💬 Solicitar cita por WhatsApp";
+
+});
 </script>
 
 </body>

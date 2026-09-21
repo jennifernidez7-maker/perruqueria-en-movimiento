@@ -1145,7 +1145,7 @@ fechaInput.min = `${yyyy}-${mm}-${dd}`;
 
 /* GENERAR HORARIOS */
 
-fechaInput.addEventListener("change", function(){
+fechaInput.addEventListener("change", async function(){
 
   horaSelect.innerHTML = "";
 
@@ -1154,7 +1154,37 @@ fechaInput.addEventListener("change", function(){
       '<option value="">Selecciona una fecha primero</option>';
     return;
   }
+  /* COMPROBAR SI EL DÍA ESTÁ BLOQUEADO */
 
+  const { data: bloqueos, error: errorBloqueo } =
+    await supabaseClient
+      .from("bloqueos")
+      .select("fecha, tipo, motivo")
+      .eq("fecha", this.value)
+      .eq("tipo", "dia");
+
+  if(errorBloqueo){
+
+    console.error(
+      "Error al consultar bloqueos:",
+      errorBloqueo
+    );
+
+  }
+
+  if(bloqueos && bloqueos.length > 0){
+
+    horaSelect.innerHTML =
+      '<option value="">🔒 Día no disponible</option>';
+
+    alert(
+      "🔒 Este día no está disponible para citas.\n\n" +
+      (bloqueos[0].motivo || "Día bloqueado")
+    );
+
+    return;
+
+  }
   const fecha = new Date(this.value + "T12:00:00");
   const diaSemana = fecha.getDay();
 

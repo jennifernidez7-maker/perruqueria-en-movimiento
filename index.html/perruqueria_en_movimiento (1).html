@@ -1160,8 +1160,8 @@ fechaInput.addEventListener("change", async function(){
     await supabaseClient
       .from("bloqueos")
       .select("fecha, tipo, motivo")
-      .eq("fecha", this.value)
-      .eq("tipo", "dia");
+    .eq("fecha", this.value)
+.eq("tipo", "dia");
 
   if(errorBloqueo){
 

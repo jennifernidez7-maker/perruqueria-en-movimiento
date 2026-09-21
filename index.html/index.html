@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -378,48 +377,6 @@ textarea{
   text-align:center;
 }
 
-/* SERVICIOS PARA SELECCIONAR */
-
-.servicios-opciones{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:10px;
-  margin-top:6px;
-}
-
-.servicio-check{
-  margin:0;
-  font-weight:normal;
-  cursor:pointer;
-}
-
-.servicio-check input{
-  position:absolute;
-  opacity:0;
-  pointer-events:none;
-}
-
-.servicio-check span{
-  display:block;
-  padding:13px 14px;
-  border:1px solid #d9c3a3;
-  border-radius:14px;
-  background:#fffdf8;
-  color:#65452f;
-  transition:.2s;
-}
-
-.servicio-check span:hover{
-  border-color:#c88a4a;
-  transform:translateY(-1px);
-}
-
-.servicio-check input:checked + span{
-  background:#fff0c9;
-  border-color:#c88a4a;
-  box-shadow:0 4px 12px rgba(90,59,37,.08);
-}
-
 /* CONTACTO */
 
 .contact{
@@ -531,10 +488,6 @@ footer a{
     font-size:32px;
   }
 
-  .servicios-opciones{
-    grid-template-columns:1fr;
-  }
-
 }
 
 </style>
@@ -582,7 +535,6 @@ Tu lomito,<br>
 <p class="lead">
 Estética canina pensada para consentir a tu mascota con paciencia, cuidado y mucho amor. 🐾 Porque el grooming también puede ser una experiencia tranquila, bonita y feliz. 💛✨.
 </p>
-
 <div class="actions">
 
 <a href="#cita" class="btn btn-primary">
@@ -600,7 +552,6 @@ Estética canina pensada para consentir a tu mascota con paciencia, cuidado y mu
 </a>
 
 </div>
-
 <p class="note">
 Atendemos con cita previa. 🐾
 </p>
@@ -971,66 +922,33 @@ Mándanos tu solicitud y te confirmaremos tu cita por WhatsApp.
 </div>
 
 
-<!-- SERVICIOS MÚLTIPLES -->
+<div class="form-group">
 
-<div class="form-group full">
+<label for="servicio">Servicio *</label>
 
-<label>
-Servicios * <small>(puedes elegir varios)</small>
-</label>
+<select id="servicio" required>
 
-<div class="servicios-opciones" id="serviciosOpciones">
+<option value="">Selecciona un servicio</option>
 
-<label class="servicio-check">
-<input type="checkbox" value="Corte y Baño">
-<span>✂️ Corte y Baño</span>
-</label>
+<option>Corte y Baño</option>
 
-<label class="servicio-check">
-<input type="checkbox" value="Baño con amor">
-<span>🫧 Baño con amor</span>
-</label>
+<option>Baño con amor</option>
 
-<label class="servicio-check">
-<input type="checkbox" value="Servicio Cat Friendly">
-<span>🐱 Servicio Cat Friendly</span>
-</label>
+<option>Servicio Cat Friendly</option>
 
-<label class="servicio-check">
-<input type="checkbox" value="Desanudado Parcial">
-<span>🪮 Desanudado Parcial</span>
-</label>
+<option>Desanudado Parcial</option>
 
-<label class="servicio-check">
-<input type="checkbox" value="Cortes altos y especializados">
-<span>✂️ Cortes altos y especializados</span>
-</label>
+<option>Cortes altos y especializados</option>
 
-<label class="servicio-check">
-<input type="checkbox" value="Limado de uñas">
-<span>🐾 Limado de uñas</span>
-</label>
+<option>Limado de uñas</option>
 
-<label class="servicio-check">
-<input type="checkbox" value="Cepillado dental">
-<span>🦷 Cepillado dental</span>
-</label>
+<option>Cepillado dental</option>
 
-<label class="servicio-check">
-  <input type="checkbox" value="Pick Up Perruquería" disabled>
-  <span>🚐 Pick Up Perruquería — Servicio temporalmente pausado 💛</span>
-</label>
+<option>Pick Up Perruquería</option>
 
-<label class="servicio-check">
-<input type="checkbox" value="Servicio a Domicilio Para Tallas Grandes">
-<span>🏠 Servicio a Domicilio Para Tallas Grandes</span>
-</label>
+<option>Servicio a Domicilio Para Tallas Grandes</option>
 
-</div>
-
-<small style="margin-top:6px;color:#80654d;">
-💛 Selecciona todos los servicios que necesite tu mascota.
-</small>
+</select>
 
 </div>
 
@@ -1114,7 +1032,6 @@ Servicios * <small>(puedes elegir varios)</small>
 <strong>⏰ Horarios:</strong><br>
 Lunes a sábado: 9:00 AM a 5:00 PM<br>
 Domingo: 10:00 AM a 1:00 PM
-
 <br><br>
 
 <strong>💰 Anticipo:</strong><br>
@@ -1124,7 +1041,6 @@ para agendar la cita. Los domingos también requieren anticipo.
 <br><br>
 
 📌 La solicitud de cita queda pendiente hasta que sea confirmada.
-
 </div>
 
 
@@ -1203,13 +1119,8 @@ Nogales, Sonora
 
 </footer>
 
-
-<!-- SUPABASE -->
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <script>
-
 const SUPABASE_URL = "https://rpeswsaygvoagpyrwkrm.supabase.co";
 
 const SUPABASE_KEY = "sb_publishable_6l0298Y2sqZmql5KWkUw-Q_rFWqNj41";
@@ -1218,8 +1129,6 @@ const supabaseClient = window.supabase.createClient(
   SUPABASE_URL,
   SUPABASE_KEY
 );
-
-
 /* FECHA MÍNIMA */
 
 const fechaInput = document.getElementById("fecha");
@@ -1234,26 +1143,49 @@ const dd = String(hoy.getDate()).padStart(2,"0");
 fechaInput.min = `${yyyy}-${mm}-${dd}`;
 
 
-/* GENERAR HORARIOS Y BLOQUEAR LOS AGENDADOS */
+/* GENERAR HORARIOS */
 
 fechaInput.addEventListener("change", async function(){
 
   horaSelect.innerHTML = "";
 
   if(!this.value){
-
     horaSelect.innerHTML =
       '<option value="">Selecciona una fecha primero</option>';
-
     return;
   }
+  /* COMPROBAR SI EL DÍA ESTÁ BLOQUEADO */
 
-  const fechaSeleccionada = this.value;
+  const { data: bloqueos, error: errorBloqueo } =
+    await supabaseClient
+      .from("bloqueos")
+      .select("fecha, tipo, motivo")
+    .eq("fecha", this.value)
+.eq("tipo", "dia");
 
-  const fecha = new Date(
-    fechaSeleccionada + "T12:00:00"
-  );
+  if(errorBloqueo){
 
+    console.error(
+      "Error al consultar bloqueos:",
+      errorBloqueo
+    );
+
+  }
+
+  if(bloqueos && bloqueos.length > 0){
+
+    horaSelect.innerHTML =
+      '<option value="">🔒 Día no disponible</option>';
+
+    alert(
+      "🔒 Este día no está disponible para citas.\n\n" +
+      (bloqueos[0].motivo || "Día bloqueado")
+    );
+
+    return;
+
+  }
+  const fecha = new Date(this.value + "T12:00:00");
   const diaSemana = fecha.getDay();
 
   let inicio = 9;
@@ -1269,74 +1201,21 @@ fechaInput.addEventListener("change", async function(){
   }
 
 
- /* CONSULTAR HORAS YA AGENDADAS */
-
-const { data: citasOcupadas, error } =
-  await supabaseClient.rpc(
-    "obtener_horas_agendadas",
-    {
-      p_fecha: fechaSeleccionada
-    }
-  );
-
-  if(error){
-
-    console.error(
-      "Error al consultar horarios ocupados:",
-      error
-    );
-
-  }
-
-
-  const horasOcupadas = new Set(
-    (citasOcupadas || []).map(
-      cita => cita.hora
-    )
-  );
-
-
-  /* CREAR HORARIOS */
-
   for(let hora = inicio; hora <= fin; hora++){
 
-    const option =
-      document.createElement("option");
+    const option = document.createElement("option");
 
-    let ampm =
-      hora >= 12 ? "PM" : "AM";
+    let ampm = hora >= 12 ? "PM" : "AM";
 
-    let hora12 =
-      hora % 12;
+    let hora12 = hora % 12;
 
     if(hora12 === 0){
       hora12 = 12;
     }
 
+    option.value = `${String(hora).padStart(2,"0")}:00`;
 
-    const horaValor =
-      `${String(hora).padStart(2,"0")}:00`;
-
-
-    option.value = horaValor;
-
-
-    /* SI YA ESTÁ AGENDADA */
-
-    if(horasOcupadas.has(horaValor)){
-
-      option.disabled = true;
-
-      option.textContent =
-        `⛔ ${hora12}:00 ${ampm} — Horario ocupado`;
-
-    }else{
-
-      option.textContent =
-        `${hora12}:00 ${ampm}`;
-
-    }
-
+    option.textContent = `${hora12}:00 ${ampm}`;
 
     horaSelect.appendChild(option);
 
@@ -1347,378 +1226,147 @@ const { data: citasOcupadas, error } =
 
 /* FORMULARIO */
 
-document.getElementById("bookingForm").addEventListener(
-  "submit",
-  async function(e){
+document.getElementById("bookingForm").addEventListener("submit", async function(e){
 
-    e.preventDefault();
+  e.preventDefault();
 
+  const boton = this.querySelector("button[type='submit']");
+  boton.disabled = true;
+  boton.textContent = "⏳ Guardando cita...";
 
-    const boton =
-      this.querySelector("button[type='submit']");
+  const fecha = document.getElementById("fecha").value;
+  const hora = document.getElementById("hora").value;
+  const servicio = document.getElementById("servicio").value;
+  const tipo = document.getElementById("tipo").value;
+  const nombreMascota = document.getElementById("nombreMascota").value;
+  const nombreDueno = document.getElementById("nombreDueno").value;
+  const telefono = document.getElementById("telefono").value;
+  const raza = document.getElementById("raza").value;
+  const peso = document.getElementById("peso").value;
+  const notas = document.getElementById("notas").value;
 
+  const fechaObj = new Date(fecha + "T12:00:00");
+  const diaSemana = fechaObj.getDay();
+  const horaNumero = parseInt(hora.split(":")[0]);
 
-    boton.disabled = true;
+  /* ANTICIPO */
 
-    boton.textContent =
-      "⏳ Guardando cita...";
+  const requiereAnticipo =
+    diaSemana === 0 || horaNumero > 14;
 
+  /* GUARDAR EN SUPABASE */
 
-    const fecha =
-      document.getElementById("fecha").value;
+  const { error } = await supabaseClient
+    .from("citas")
+    .insert([
+      {
+        fecha: fecha,
+        hora: hora,
+        servicio: servicio,
+      tipo_mascota: tipo,
+        nombre_mascota: nombreMascota,
+        nombre_dueno: nombreDueno,
+        telefono: telefono,
+        raza: raza || null,
+        peso: peso || null,
+        notas: notas || null,
+        estado: "Pendiente",
+        requiere_anticipo: requiereAnticipo
+      }
+    ]);
 
-    const hora =
-      document.getElementById("hora").value;
+  if(error){
 
+    console.error("Error al guardar la cita:", error);
 
-    /* OBTENER TODOS LOS SERVICIOS SELECCIONADOS */
-
-    const serviciosSeleccionados =
-      Array.from(
-        document.querySelectorAll(
-          '#serviciosOpciones input[type="checkbox"]:checked'
-        )
-      ).map(
-        input => input.value
-      );
-
-
-    /* COMPROBAR QUE HAYA AL MENOS UN SERVICIO */
-
-    if(serviciosSeleccionados.length === 0){
-
-      alert(
-        "🐾 Selecciona al menos un servicio."
-      );
-
-      boton.disabled = false;
-
-      boton.textContent =
-        "💬 Solicitar cita por WhatsApp";
-
-      return;
-
-    }
-
-
-    /* JUNTAR LOS SERVICIOS */
-
-    const servicio =
-      serviciosSeleccionados.join(", ");
-
-
-    const tipo =
-      document.getElementById("tipo").value;
-
-    const nombreMascota =
-      document.getElementById("nombreMascota").value;
-
-    const nombreDueno =
-      document.getElementById("nombreDueno").value;
-
-    const telefono =
-      document.getElementById("telefono").value;
-
-    const raza =
-      document.getElementById("raza").value;
-
-    const peso =
-      document.getElementById("peso").value;
-
-    const notas =
-      document.getElementById("notas").value;
-
-
-    const fechaObj =
-      new Date(fecha + "T12:00:00");
-
-    const diaSemana =
-      fechaObj.getDay();
-
-    const horaNumero =
-      parseInt(hora.split(":")[0]);
-
-
-    /* ANTICIPO */
-
-    const requiereAnticipo =
-      diaSemana === 0 ||
-      horaNumero > 14;
-
-
-    /* COMPROBAR NUEVAMENTE SI EL HORARIO SIGUE LIBRE */
-
-    const {
-      data: citaExistente,
-      error: errorDisponibilidad
-    } = await supabaseClient
-      .from("citas")
-      .select("id")
-      .eq("fecha", fecha)
-      .eq("hora", hora)
-      .eq("estado", "Agendada")
-      .limit(1);
-
-
-    if(errorDisponibilidad){
-
-      console.error(
-        "Error comprobando disponibilidad:",
-        errorDisponibilidad
-      );
-
-      alert(
-        "❌ No pudimos comprobar si el horario sigue disponible. " +
-        "Por favor inténtalo nuevamente."
-      );
-
-      boton.disabled = false;
-
-      boton.textContent =
-        "💬 Solicitar cita por WhatsApp";
-
-      return;
-
-    }
-
-
-    /* SI ALGUIEN YA OCUPÓ EL HORARIO */
-
-    if(citaExistente && citaExistente.length > 0){
-
-      alert(
-        "⛔ Ese horario acaba de ser ocupado. " +
-        "Por favor selecciona otra hora."
-      );
-
-      boton.disabled = false;
-
-      boton.textContent =
-        "💬 Solicitar cita por WhatsApp";
-
-      /* VOLVER A CARGAR LOS HORARIOS */
-
-      fechaInput.dispatchEvent(
-        new Event("change")
-      );
-
-      return;
-
-    }
-
-
-    /* GUARDAR EN SUPABASE */
-
-    console.log(
-      "ESTOY EJECUTANDO EL CÓDIGO NUEVO"
+    alert(
+      "❌ No pudimos guardar la cita. " +
+      "Por favor inténtalo nuevamente."
     );
-
-
-    const { error } =
-      await supabaseClient
-        .from("citas")
-        .insert([
-          {
-            fecha: fecha,
-
-            hora: hora,
-
-            servicio: servicio,
-
-            tipo_mascota: tipo,
-
-            nombre_mascota: nombreMascota,
-
-            nombre_dueno: nombreDueno,
-
-            telefono: telefono,
-
-            raza: raza || null,
-
-            peso: peso || null,
-
-            notas: notas || null,
-
-            estado: "Pendiente",
-
-            requiere_anticipo:
-              requiereAnticipo
-
-          }
-        ]);
-
-
-    if(error){
-
-      console.error(
-        "Error al guardar la cita:",
-        error
-      );
-
-
-      alert(
-        "❌ No pudimos guardar la cita. " +
-        "Por favor inténtalo nuevamente."
-      );
-
-
-      boton.disabled = false;
-
-      boton.textContent =
-        "💬 Solicitar cita por WhatsApp";
-
-      return;
-
-    }
-
-
-    /* FECHA BONITA */
-
-    const fechaBonita =
-      fechaObj.toLocaleDateString(
-        "es-MX",
-        {
-          weekday:"long",
-          year:"numeric",
-          month:"long",
-          day:"numeric"
-        }
-      );
-
-
-    /* MENSAJE DE WHATSAPP */
-
-    let mensaje = "";
-
-
-    mensaje +=
-      "🐾 *SOLICITUD DE CITA — PERRUQUERIA EN MOVIMIENTO*%0A%0A";
-
-
-    mensaje +=
-      "📅 *Fecha:* " +
-      fechaBonita +
-      "%0A";
-
-
-    mensaje +=
-      "⏰ *Hora:* " +
-      hora +
-      "%0A";
-
-
-    mensaje +=
-      "✂️ *Servicios:* " +
-      servicio +
-      "%0A";
-
-
-    mensaje +=
-      "🐶 *Mascota:* " +
-      tipo +
-      "%0A";
-
-
-    mensaje +=
-      "💗 *Nombre:* " +
-      nombreMascota +
-      "%0A";
-
-
-    mensaje +=
-      "👤 *Dueño:* " +
-      nombreDueno +
-      "%0A";
-
-
-    mensaje +=
-      "📱 *Teléfono:* " +
-      telefono +
-      "%0A";
-
-
-    if(raza){
-
-      mensaje +=
-        "🐾 *Raza / tipo de pelo:* " +
-        raza +
-        "%0A";
-
-    }
-
-
-    if(peso){
-
-      mensaje +=
-        "⚖️ *Peso:* " +
-        peso +
-        "%0A";
-
-    }
-
-
-    if(notas){
-
-      mensaje +=
-        "📝 *Notas:* " +
-        notas +
-        "%0A";
-
-    }
-
-
-    mensaje += "%0A";
-
-
-    if(requiereAnticipo){
-
-      mensaje +=
-        "💰 *IMPORTANTE:* Esta cita requiere anticipo para poder agendarse.%0A%0A";
-
-    }
-
-
-    mensaje +=
-      "⏳ *La cita queda pendiente de confirmación por Perruqueria en movimiento.*";
-
-
-    /* ABRIR WHATSAPP */
-
-    const numeroWhatsApp =
-      "526311864750";
-
-
-    const url =
-      "https://wa.me/" +
-      numeroWhatsApp +
-      "?text=" +
-      mensaje;
-
-
-    window.open(
-      url,
-      "_blank"
-    );
-
-
-    /* LIMPIAR FORMULARIO */
-
-    this.reset();
-
-
-    horaSelect.innerHTML =
-      '<option value="">Selecciona una fecha primero</option>';
-
 
     boton.disabled = false;
+    boton.textContent = "💬 Solicitar cita por WhatsApp";
 
+    return;
+  }
 
-    boton.textContent =
-      "💬 Solicitar cita por WhatsApp";
+  /* FECHA BONITA */
+
+  const fechaBonita =
+    fechaObj.toLocaleDateString("es-MX", {
+      weekday:"long",
+      year:"numeric",
+      month:"long",
+      day:"numeric"
+    });
+
+  /* MENSAJE DE WHATSAPP */
+
+  let mensaje = "";
+
+  mensaje += "🐾 *SOLICITUD DE CITA — PERRUQUERIA EN MOVIMIENTO*%0A%0A";
+
+  mensaje += "📅 *Fecha:* " + fechaBonita + "%0A";
+
+  mensaje += "⏰ *Hora:* " + hora + "%0A";
+
+  mensaje += "✂️ *Servicio:* " + servicio + "%0A";
+
+  mensaje += "🐶 *Mascota:* " + tipo + "%0A";
+
+  mensaje += "💗 *Nombre:* " + nombreMascota + "%0A";
+
+  mensaje += "👤 *Dueño:* " + nombreDueno + "%0A";
+
+  mensaje += "📱 *Teléfono:* " + telefono + "%0A";
+
+  if(raza){
+    mensaje += "🐾 *Raza / tipo de pelo:* " + raza + "%0A";
+  }
+
+  if(peso){
+    mensaje += "⚖️ *Peso:* " + peso + "%0A";
+  }
+
+  if(notas){
+    mensaje += "📝 *Notas:* " + notas + "%0A";
+  }
+
+  mensaje += "%0A";
+
+  if(requiereAnticipo){
+
+    mensaje +=
+      "💰 *IMPORTANTE:* Esta cita requiere anticipo para poder agendarse.%0A%0A";
 
   }
-);
 
+  mensaje +=
+    "⏳ *La cita queda pendiente de confirmación por Perruqueria en movimiento.*";
+
+  /* ABRIR WHATSAPP */
+
+  const numeroWhatsApp = "526311864750";
+
+  const url =
+    "https://wa.me/" +
+    numeroWhatsApp +
+    "?text=" +
+    mensaje;
+
+  window.open(url, "_blank");
+
+  /* LIMPIAR FORMULARIO */
+
+  this.reset();
+
+  horaSelect.innerHTML =
+    '<option value="">Selecciona una fecha primero</option>';
+
+  boton.disabled = false;
+  boton.textContent = "💬 Solicitar cita por WhatsApp";
+
+});
 </script>
 
 </body>

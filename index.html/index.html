@@ -1210,7 +1210,10 @@ fechaInput.addEventListener("change", async function(){
     );
 
   }
-console.log("CITAS ENCONTRADAS:", citasExistentes);
+alert(
+  "CITAS ENCONTRADAS:\n\n" +
+  JSON.stringify(citasExistentes, null, 2)
+);
 
   /* =========================
      HORARIO DEL NEGOCIO

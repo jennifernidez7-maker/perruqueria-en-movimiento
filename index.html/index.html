@@ -1201,7 +1201,9 @@ fechaInput.addEventListener("change", async function(){
       .from("citas")
       .select("fecha, hora, duracion, estado")
       .eq("fecha", fechaSeleccionada);
-
+  
+console.log("CITAS QUE LLEGARON:", citasExistentes);
+console.log("ERROR:", errorCitas);
 
   if(errorCitas){
 

@@ -1210,8 +1210,11 @@ fechaInput.addEventListener("change", async function(){
     );
 
   }
+  
 alert(
-  "CITAS ENCONTRADAS:\n\n" +
+  "FECHA QUE ESTOY BUSCANDO:\n\n" +
+  fechaSeleccionada +
+  "\n\nCITAS ENCONTRADAS:\n\n" +
   JSON.stringify(citasExistentes, null, 2)
 );
 

@@ -1201,6 +1201,10 @@ fechaInput.addEventListener("change", async function(){
       .from("citas")
       .select("fecha, hora, duracion, estado")
       .eq("fecha", fechaSeleccionada);
+  alert(
+  "ERROR DE SUPABASE:\n\n" +
+  JSON.stringify(errorCitas, null, 2)
+);
 
   if(errorCitas){
 

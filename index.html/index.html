@@ -1151,12 +1151,15 @@ fechaInput.addEventListener("change", async function(){
   horaSelect.innerHTML = "";
 
   if(!this.value){
+
     horaSelect.innerHTML =
       '<option value="">Selecciona una fecha primero</option>';
+
     return;
   }
 
   const fechaSeleccionada = this.value;
+
 
   /* =========================
      COMPROBAR DÍA BLOQUEADO
@@ -1169,6 +1172,7 @@ fechaInput.addEventListener("change", async function(){
       .eq("fecha", fechaSeleccionada)
       .eq("tipo", "dia");
 
+
   if(errorBloqueo){
 
     console.error(
@@ -1177,6 +1181,7 @@ fechaInput.addEventListener("change", async function(){
     );
 
   }
+
 
   if(bloqueos && bloqueos.length > 0){
 
@@ -1189,45 +1194,26 @@ fechaInput.addEventListener("change", async function(){
     );
 
     return;
-  }
-
-
-  /* =========================
-     CONSULTAR CITAS EXISTENTES
-     ========================= */
-
-  const { data: citasExistentes, error: errorCitas } =
-    await supabaseClient
-      .from("citas")
-      .select("fecha, hora, duracion, estado")
-      .eq("fecha", fechaSeleccionada);
-  
-console.log("CITAS QUE LLEGARON:", citasExistentes);
-console.log("ERROR:", errorCitas);
-
-  if(errorCitas){
-
-    console.error(
-      "Error al consultar citas:",
-      errorCitas
-    );
 
   }
-  
 
 
   /* =========================
      HORARIO DEL NEGOCIO
      ========================= */
 
-  const fecha = new Date(
-    fechaSeleccionada + "T12:00:00"
-  );
+  const fecha =
+    new Date(
+      fechaSeleccionada + "T12:00:00"
+    );
 
-  const diaSemana = fecha.getDay();
+  const diaSemana =
+    fecha.getDay();
+
 
   let inicio = 9;
   let fin = 17;
+
 
   /* DOMINGO */
 
@@ -1245,98 +1231,39 @@ console.log("ERROR:", errorCitas);
 
   for(let hora = inicio; hora <= fin; hora++){
 
-    const horaTexto =
-      `${String(hora).padStart(2,"0")}:00`;
+    const option =
+      document.createElement("option");
 
 
-    /* =========================
-       COMPROBAR SI YA EXISTE CITA
-       ========================= */
-
-    const citaOcupada =
-      (citasExistentes || []).some(cita => {
-
-        if(cita.estado === "Cancelada"){
-          return false;
-        }
-
-        if(!cita.hora){
-          return false;
-        }
-
-        const inicioCita =
-          new Date(
-            `${fechaSeleccionada}T${cita.hora}`
-          ).getTime();
-
-        const duracion =
-          Number(cita.duracion) || 60;
-
-        const finCita =
-          inicioCita + duracion * 60000;
-
-        const inicioNueva =
-          new Date(
-            `${fechaSeleccionada}T${horaTexto}`
-          ).getTime();
-
-        const finNueva =
-          inicioNueva + 60 * 60000;
-
-        return (
-          inicioNueva < finCita &&
-          finNueva > inicioCita
-        );
-
-      });
+    let ampm =
+      hora >= 12 ? "PM" : "AM";
 
 
-    /* =========================
-       AGREGAR HORARIO
-       ========================= */
+    let hora12 =
+      hora % 12;
 
-    if(!citaOcupada){
 
-      const option =
-        document.createElement("option");
+    if(hora12 === 0){
 
-      let ampm =
-        hora >= 12 ? "PM" : "AM";
-
-      let hora12 =
-        hora % 12;
-
-      if(hora12 === 0){
-        hora12 = 12;
-      }
-
-      option.value = horaTexto;
-
-      option.textContent =
-        `${hora12}:00 ${ampm}`;
-
-      horaSelect.appendChild(option);
+      hora12 = 12;
 
     }
 
-  }
+
+    option.value =
+      `${String(hora).padStart(2,"0")}:00`;
 
 
-  /* =========================
-     SI NO HAY HORARIOS
-     ========================= */
+    option.textContent =
+      `${hora12}:00 ${ampm}`;
 
-  if(horaSelect.options.length === 0){
 
-    horaSelect.innerHTML =
-      '<option value="">😿 No hay horarios disponibles</option>';
+    horaSelect.appendChild(option);
 
   }
 
 });
-
-
-
+  
 /* FORMULARIO */
 
 document.getElementById("bookingForm").addEventListener("submit", async function(e){

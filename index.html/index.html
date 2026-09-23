@@ -1121,7 +1121,7 @@ Nogales, Sonora
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-const SUPABASE_URL = "https://rpeswsaygvoagpyrwkr2.supabase.co";
+const SUPABASE_URL = "https://rpeswsaygvoagpyrwkrm.supabase.co";
 
 const SUPABASE_KEY = "sb_publishable_6l0298Y2sqZmql5KWkUw-Q_rFWqNj41";
 
@@ -1143,7 +1143,6 @@ const dd = String(hoy.getDate()).padStart(2,"0");
 fechaInput.min = `${yyyy}-${mm}-${dd}`;
 
 
-
 /* GENERAR HORARIOS */
 
 fechaInput.addEventListener("change", async function(){
@@ -1155,15 +1154,14 @@ fechaInput.addEventListener("change", async function(){
       '<option value="">Selecciona una fecha primero</option>';
     return;
   }
-
   /* COMPROBAR SI EL DÍA ESTÁ BLOQUEADO */
 
   const { data: bloqueos, error: errorBloqueo } =
     await supabaseClient
       .from("bloqueos")
       .select("fecha, tipo, motivo")
-      .eq("fecha", this.value)
-      .eq("tipo", "dia");
+    .eq("fecha", this.value)
+.eq("tipo", "dia");
 
   if(errorBloqueo){
 
@@ -1187,7 +1185,6 @@ fechaInput.addEventListener("change", async function(){
     return;
 
   }
-
   const fecha = new Date(this.value + "T12:00:00");
   const diaSemana = fecha.getDay();
 
@@ -1216,18 +1213,17 @@ fechaInput.addEventListener("change", async function(){
       hora12 = 12;
     }
 
-    option.value =
-      `${String(hora).padStart(2,"0")}:00`;
+    option.value = `${String(hora).padStart(2,"0")}:00`;
 
-    option.textContent =
-      `${hora12}:00 ${ampm}`;
+    option.textContent = `${hora12}:00 ${ampm}`;
 
     horaSelect.appendChild(option);
 
   }
 
 });
-  
+
+
 /* FORMULARIO */
 
 document.getElementById("bookingForm").addEventListener("submit", async function(e){

@@ -1192,9 +1192,11 @@ fechaInput.addEventListener("change", async function(){
       .from("citas")
       .select("fecha, hora, duracion, estado")
       .eq("fecha", this.value);
-
+  
+alert(JSON.stringify(citasExistentes));
+  
   if(errorCitas){
-
+  
     console.error(
       "Error al consultar citas:",
       errorCitas

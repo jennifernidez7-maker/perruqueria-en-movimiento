@@ -1182,7 +1182,23 @@ fechaInput.addEventListener("change", async function(){
       (bloqueos[0].motivo || "Día bloqueado")
     );
 
-    return;
+      return;
+  }
+
+  /* COMPROBAR CITAS YA AGENDADAS */
+
+  const { data: citasExistentes, error: errorCitas } =
+    await supabaseClient
+      .from("citas")
+      .select("fecha, hora, duracion, estado")
+      .eq("fecha", this.value);
+
+  if(errorCitas){
+
+    console.error(
+      "Error al consultar citas:",
+      errorCitas
+    );
 
   }
   const fecha = new Date(this.value + "T12:00:00");

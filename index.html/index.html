@@ -1188,10 +1188,10 @@ fechaInput.addEventListener("change", async function(){
   /* COMPROBAR CITAS YA AGENDADAS */
 
   const { data: citasExistentes, error: errorCitas } =
-    await supabaseClient
-      .from("citas")
-      .select("fecha, hora, duracion, estado")
-      .eq("fecha", this.value);
+  await supabaseClient
+    .rpc("consultar_disponibilidad", {
+      p_fecha: this.value
+    });
   
 alert(JSON.stringify(citasExistentes));
   

@@ -1201,10 +1201,7 @@ fechaInput.addEventListener("change", async function(){
       .from("citas")
       .select("fecha, hora, duracion, estado")
       .eq("fecha", fechaSeleccionada);
-  alert(
-  "ERROR DE SUPABASE:\n\n" +
-  JSON.stringify(errorCitas, null, 2)
-);
+
 
   if(errorCitas){
 
@@ -1215,12 +1212,7 @@ fechaInput.addEventListener("change", async function(){
 
   }
   
-alert(
-  "FECHA QUE ESTOY BUSCANDO:\n\n" +
-  fechaSeleccionada +
-  "\n\nCITAS ENCONTRADAS:\n\n" +
-  JSON.stringify(citasExistentes, null, 2)
-);
+
 
   /* =========================
      HORARIO DEL NEGOCIO

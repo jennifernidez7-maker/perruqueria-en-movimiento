@@ -1151,27 +1151,19 @@ fechaInput.addEventListener("change", async function(){
   horaSelect.innerHTML = "";
 
   if(!this.value){
-
     horaSelect.innerHTML =
       '<option value="">Selecciona una fecha primero</option>';
-
     return;
   }
 
-  const fechaSeleccionada = this.value;
-
-
-  /* =========================
-     COMPROBAR DÍA BLOQUEADO
-     ========================= */
+  /* COMPROBAR SI EL DÍA ESTÁ BLOQUEADO */
 
   const { data: bloqueos, error: errorBloqueo } =
     await supabaseClient
       .from("bloqueos")
       .select("fecha, tipo, motivo")
-      .eq("fecha", fechaSeleccionada)
+      .eq("fecha", this.value)
       .eq("tipo", "dia");
-
 
   if(errorBloqueo){
 
@@ -1181,7 +1173,6 @@ fechaInput.addEventListener("change", async function(){
     );
 
   }
-
 
   if(bloqueos && bloqueos.length > 0){
 
@@ -1197,23 +1188,11 @@ fechaInput.addEventListener("change", async function(){
 
   }
 
-
-  /* =========================
-     HORARIO DEL NEGOCIO
-     ========================= */
-
-  const fecha =
-    new Date(
-      fechaSeleccionada + "T12:00:00"
-    );
-
-  const diaSemana =
-    fecha.getDay();
-
+  const fecha = new Date(this.value + "T12:00:00");
+  const diaSemana = fecha.getDay();
 
   let inicio = 9;
   let fin = 17;
-
 
   /* DOMINGO */
 
@@ -1225,38 +1204,23 @@ fechaInput.addEventListener("change", async function(){
   }
 
 
-  /* =========================
-     GENERAR HORARIOS
-     ========================= */
-
   for(let hora = inicio; hora <= fin; hora++){
 
-    const option =
-      document.createElement("option");
+    const option = document.createElement("option");
 
+    let ampm = hora >= 12 ? "PM" : "AM";
 
-    let ampm =
-      hora >= 12 ? "PM" : "AM";
-
-
-    let hora12 =
-      hora % 12;
-
+    let hora12 = hora % 12;
 
     if(hora12 === 0){
-
       hora12 = 12;
-
     }
-
 
     option.value =
       `${String(hora).padStart(2,"0")}:00`;
 
-
     option.textContent =
       `${hora12}:00 ${ampm}`;
-
 
     horaSelect.appendChild(option);
 

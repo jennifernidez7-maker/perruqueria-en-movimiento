@@ -1219,12 +1219,24 @@ fechaInput.addEventListener("change", async function(){
   }
 
 
-  for(let hora = inicio; hora <= fin; hora++){
-        const horaTexto =
-      `${String(hora).padStart(2,"0")}:00`;
 
-    const horaOcupada =
-      (citasExistentes || []).some(cita => {
+for(let hora = inicio; hora <= fin; hora++){
+  const horaTexto =
+    `${String(hora).padStart(2,"0")}:00`;
+
+  // COMPROBAR SI ESTA HORA ESTÁ BLOQUEADA MANUALMENTE
+  const horaBloqueada = (bloqueos || []).some(
+    b =>
+      b.tipo === "hora" &&
+      b.hora === horaTexto
+  );
+
+  if(horaBloqueada){
+    continue;
+  }
+
+  const horaOcupada =
+    (citasExistentes || []).some(cita => {
 
         if(cita.estado === "Cancelada") return false;
         if(!cita.hora) return false;

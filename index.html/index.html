@@ -1154,37 +1154,38 @@ fechaInput.addEventListener("change", async function(){
       '<option value="">Selecciona una fecha primero</option>';
     return;
   }
-  /* COMPROBAR SI EL DÍA ESTÁ BLOQUEADO */
+ 
+  /* COMPROBAR DÍAS Y HORAS BLOQUEADOS */
 
   const { data: bloqueos, error: errorBloqueo } =
     await supabaseClient
       .from("bloqueos")
-      .select("fecha, tipo, motivo")
-    .eq("fecha", this.value)
-.eq("tipo", "dia");
+      .select("fecha, tipo, motivo, hora")
+      .eq("fecha", this.value);
 
   if(errorBloqueo){
-
     console.error(
       "Error al consultar bloqueos:",
       errorBloqueo
     );
-
   }
 
-  if(bloqueos && bloqueos.length > 0){
+  const bloqueoDia = (bloqueos || []).find(
+    b => b.tipo === "dia"
+  );
+
+  if(bloqueoDia){
 
     horaSelect.innerHTML =
       '<option value="">🔒 Día no disponible</option>';
 
     alert(
       "🔒 Este día no está disponible para citas.\n\n" +
-      (bloqueos[0].motivo || "Día bloqueado")
+      (bloqueoDia.motivo || "Día bloqueado")
     );
 
-      return;
+    return;
   }
-
   /* COMPROBAR CITAS YA AGENDADAS */
 
   const { data: citasExistentes, error: errorCitas } =
